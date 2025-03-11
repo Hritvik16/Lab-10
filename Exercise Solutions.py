@@ -42,7 +42,7 @@ def test_book_collection():
     
     # Test string representations
     print(str(book1))
-    print(repr(book1))
+    print(book1)
     
     # Add reviews
     book1.add_review(5)
