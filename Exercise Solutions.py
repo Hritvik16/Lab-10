@@ -850,6 +850,14 @@ def test_inventory_system():
 ##############################
 
 class Node:
+    """
+    A node in a binary search tree.
+    
+    Attributes:
+        value: The value stored in the node
+        left: Reference to the left child node
+        right: Reference to the right child node
+    """
     def __init__(self, value):
         self.value = value
         self.left = None
@@ -860,16 +868,24 @@ class Node:
 
 
 class BinarySearchTree:
+    """
+    A binary search tree data structure.
+    
+    Attributes:
+        root: Reference to the root node
+    """
     def __init__(self):
         self.root = None
     
     def insert(self, value):
+        """Insert a new value into the tree"""
         if self.root is None:
             self.root = Node(value)
         else:
             self._insert_recursive(self.root, value)
     
     def _insert_recursive(self, node, value):
+        """Recursively insert a value at the correct position"""
         if value < node.value:
             if node.left is None:
                 node.left = Node(value)
@@ -882,9 +898,11 @@ class BinarySearchTree:
                 self._insert_recursive(node.right, value)
     
     def search(self, value):
+        """Search for a value in the tree"""
         return self._search_recursive(self.root, value)
     
     def _search_recursive(self, node, value):
+        """Recursively search for a value in the tree"""
         if node is None:
             return False
         if node.value == value:
@@ -894,62 +912,74 @@ class BinarySearchTree:
         return self._search_recursive(node.right, value)
     
     def in_order_traversal(self):
+        """Perform in-order traversal of the tree"""
         result = []
         self._in_order_recursive(self.root, result)
         return result
     
     def _in_order_recursive(self, node, result):
+        """Helper method for in-order traversal"""
         if node:
             self._in_order_recursive(node.left, result)
             result.append(node.value)
             self._in_order_recursive(node.right, result)
     
     def pre_order_traversal(self):
+        """Perform pre-order traversal of the tree"""
         result = []
         self._pre_order_recursive(self.root, result)
         return result
     
     def _pre_order_recursive(self, node, result):
+        """Helper method for pre-order traversal"""
         if node:
             result.append(node.value)
             self._pre_order_recursive(node.left, result)
             self._pre_order_recursive(node.right, result)
     
     def post_order_traversal(self):
+        """Perform post-order traversal of the tree"""
         result = []
         self._post_order_recursive(self.root, result)
         return result
     
     def _post_order_recursive(self, node, result):
+        """Helper method for post-order traversal"""
         if node:
             self._post_order_recursive(node.left, result)
             self._post_order_recursive(node.right, result)
             result.append(node.value)
     
     def find_min(self):
+        """Find the minimum value in the tree"""
         if self.root is None:
             return None
         return self._find_min_recursive(self.root)
     
     def _find_min_recursive(self, node):
+        """Helper method to find the minimum value"""
         if node.left is None:
             return node.value
         return self._find_min_recursive(node.left)
     
     def find_max(self):
+        """Find the maximum value in the tree"""
         if self.root is None:
             return None
         return self._find_max_recursive(self.root)
     
     def _find_max_recursive(self, node):
+        """Helper method to find the maximum value"""
         if node.right is None:
             return node.value
         return self._find_max_recursive(node.right)
     
     def get_height(self):
+        """Get the height of the tree"""
         return self._get_height_recursive(self.root)
     
     def _get_height_recursive(self, node):
+        """Helper method to calculate the height"""
         if node is None:
             return -1
         left_height = self._get_height_recursive(node.left)
@@ -957,9 +987,11 @@ class BinarySearchTree:
         return max(left_height, right_height) + 1
     
     def delete(self, value):
+        """Delete a value from the tree"""
         self.root = self._delete_recursive(self.root, value)
     
     def _delete_recursive(self, node, value):
+        """Helper method to recursively delete a value"""
         # Base case: If the tree is empty
         if node is None:
             return None
@@ -991,6 +1023,7 @@ class BinarySearchTree:
 
 
 def test_binary_search_tree():
+    """Test the Binary Search Tree implementation"""
     # Create BST
     bst = BinarySearchTree()
     
@@ -1212,6 +1245,741 @@ def test_game_character_system():
     print(mage)
     print(archer)
 
+"""
+Solutions for Additional Python Exercises:
+- Lambda Functions and Functional Programming
+- Bit Operations
+- Linked Lists
+- Loop Logic and Recursive Algorithms
+"""
+
+##############################
+# Solution 11: Lambda Functions and Functional Programming
+##############################
+
+def map_values(func, values):
+    """
+    Apply a function to all items in an input list and return a new list
+    without using Python's built-in map().
+    
+    Args:
+        func: A function that takes a single argument
+        values: A list of values to apply the function to
+    
+    Returns:
+        A new list with the function applied to each value
+    """
+    return [func(value) for value in values]
+
+
+def filter_values(predicate, values):
+    """
+    Filter a list to include only values that satisfy a predicate
+    without using Python's built-in filter().
+    
+    Args:
+        predicate: A function that returns True/False for a given value
+        values: A list of values to filter
+    
+    Returns:
+        A new filtered list
+    """
+    return [value for value in values if predicate(value)]
+
+
+def string_processor():
+    """
+    Returns a dictionary of lambda functions for string processing.
+    
+    Returns:
+        Dictionary mapping operation names to lambda functions
+    """
+    return {
+        "uppercase": lambda s: s.upper(),
+        "lowercase": lambda s: s.lower(),
+        "capitalize": lambda s: ' '.join(word.capitalize() for word in s.split()),
+        "reverse": lambda s: s[::-1],
+        "word_count": lambda s: len(s.split()),
+        "remove_spaces": lambda s: s.replace(" ", "")
+    }
+
+
+def compose(f, g):
+    """
+    Creates a function composition f(g(x)).
+    
+    Args:
+        f: Outer function
+        g: Inner function
+    
+    Returns:
+        A new function that applies g and then f
+    """
+    return lambda x: f(g(x))
+
+
+def process_pipeline(functions):
+    """
+    Creates a pipeline from a list of functions, applying them in sequence.
+    
+    Args:
+        functions: A list of functions
+    
+    Returns:
+        A function that applies all the functions in sequence
+    """
+    def pipeline(x):
+        result = x
+        for func in functions:
+            result = func(result)
+        return result
+    
+    return pipeline
+
+
+def test_lambda_functions():
+    """Test the lambda functions and functional programming utilities"""
+    # Test map_values
+    numbers = [1, 2, 3, 4, 5]
+    squared = map_values(lambda x: x**2, numbers)
+    print("Squared numbers:", squared)
+    
+    # Test filter_values
+    even_numbers = filter_values(lambda x: x % 2 == 0, numbers)
+    print("Even numbers:", even_numbers)
+    
+    # Test string_processor
+    processors = string_processor()
+    text = "hello world"
+    for name, processor in processors.items():
+        print(f"{name}: {processor(text)}")
+    
+    # Test compose
+    double = lambda x: x * 2
+    add_one = lambda x: x + 1
+    double_then_add_one = compose(add_one, double)
+    print("double_then_add_one(5):", double_then_add_one(5))
+    
+    # Test process_pipeline
+    pipeline = process_pipeline([
+        lambda x: x + 10,
+        lambda x: x * 2,
+        lambda x: x - 5
+    ])
+    print("pipeline(5):", pipeline(5))
+
+
+##############################
+# Solution 12: Bit Operations
+##############################
+
+def count_set_bits(n):
+    """
+    Count the number of '1' bits in the binary representation of n.
+    
+    Args:
+        n: A non-negative integer
+    
+    Returns:
+        Number of set bits
+    """
+    count = 0
+    while n:
+        count += n & 1  # Check if least significant bit is 1
+        n >>= 1         # Shift right by 1
+    return count
+
+
+def is_power_of_two(n):
+    """
+    Check if n is a power of 2.
+    
+    Args:
+        n: A non-negative integer
+    
+    Returns:
+        True if n is a power of 2, False otherwise
+    """
+    # A power of 2, and only a power of 2, has exactly one bit set
+    # Corner case: n=0 is not a power of 2
+    return n > 0 and (n & (n - 1)) == 0
+
+
+def get_bit(n, position):
+    """
+    Get the bit value at the specified position in n.
+    
+    Args:
+        n: A non-negative integer
+        position: The position to get (0-indexed from right)
+    
+    Returns:
+        0 or 1, the bit value at the specified position
+    """
+    # Shift 1 to the position then AND with n
+    return (n >> position) & 1
+
+
+def set_bit(n, position):
+    """
+    Set the bit at the specified position to 1.
+    
+    Args:
+        n: A non-negative integer
+        position: The position to set (0-indexed from right)
+    
+    Returns:
+        New integer with bit set
+    """
+    return n | (1 << position)
+
+
+def clear_bit(n, position):
+    """
+    Clear the bit at the specified position (set to 0).
+    
+    Args:
+        n: A non-negative integer
+        position: The position to clear (0-indexed from right)
+    
+    Returns:
+        New integer with bit cleared
+    """
+    # Create a mask with a 0 at the position and 1s elsewhere
+    mask = ~(1 << position)
+    return n & mask
+
+
+def toggle_bit(n, position):
+    """
+    Toggle (flip) the bit at the specified position.
+    
+    Args:
+        n: A non-negative integer
+        position: The position to toggle (0-indexed from right)
+    
+    Returns:
+        New integer with bit toggled
+    """
+    return n ^ (1 << position)
+
+
+def test_bit_operations():
+    """Test the bit operation functions"""
+    # Test count_set_bits
+    print("count_set_bits(0):", count_set_bits(0))
+    print("count_set_bits(1):", count_set_bits(1))
+    print("count_set_bits(5):", count_set_bits(5))  # 101 in binary
+    print("count_set_bits(15):", count_set_bits(15))  # 1111 in binary
+    
+    # Test is_power_of_two
+    print("\nis_power_of_two(0):", is_power_of_two(0))
+    print("is_power_of_two(1):", is_power_of_two(1))
+    print("is_power_of_two(2):", is_power_of_two(2))
+    print("is_power_of_two(4):", is_power_of_two(4))
+    print("is_power_of_two(5):", is_power_of_two(5))
+    print("is_power_of_two(8):", is_power_of_two(8))
+    
+    # Test get_bit, set_bit, clear_bit, toggle_bit
+    n = 42  # Binary: 101010
+    print("\nBinary representation of 42:", bin(n))
+    
+    for i in range(6):
+        print(f"get_bit(42, {i}):", get_bit(n, i))
+    
+    print("\nset_bit(42, 0):", set_bit(n, 0), "Binary:", bin(set_bit(n, 0)))
+    print("set_bit(42, 3):", set_bit(n, 3), "Binary:", bin(set_bit(n, 3)))
+    
+    print("\nclear_bit(42, 1):", clear_bit(n, 1), "Binary:", bin(clear_bit(n, 1)))
+    print("clear_bit(42, 5):", clear_bit(n, 5), "Binary:", bin(clear_bit(n, 5)))
+    
+    print("\ntoggle_bit(42, 0):", toggle_bit(n, 0), "Binary:", bin(toggle_bit(n, 0)))
+    print("toggle_bit(42, 1):", toggle_bit(n, 1), "Binary:", bin(toggle_bit(n, 1)))
+
+
+##############################
+# Solution 13: Linked Lists
+##############################
+
+class LLNode:
+    """
+    A node in a linked list.
+    
+    Attributes:
+        data: The value stored in the node
+        next: Reference to the next node
+    """
+    def __init__(self, data, next=None):
+        self.data = data
+        self.next = next
+    
+    def __str__(self):
+        return str(self.data)
+
+
+class LinkedList:
+    """
+    A singly linked list.
+    
+    Attributes:
+        head: Reference to the first node
+        size: Number of nodes in the list
+    """
+    def __init__(self):
+        self.head = None
+        self.size = 0
+    
+    def is_empty(self):
+        """Check if the list is empty"""
+        return self.head is None
+    
+    def append(self, data):
+        """Add a new node with data at the end of the list"""
+        new_node = LLNode(data)
+        
+        if self.is_empty():
+            self.head = new_node
+        else:
+            current = self.head
+            # Traverse to the last node
+            while current.next:
+                current = current.next
+            current.next = new_node
+        
+        self.size += 1
+    
+    def prepend(self, data):
+        """Add a new node with data at the beginning of the list"""
+        new_node = LLNode(data)
+        new_node.next = self.head
+        self.head = new_node
+        self.size += 1
+    
+    def insert(self, data, position):
+        """Insert a new node at the specified position"""
+        if position < 0 or position > self.size:
+            raise IndexError("Position out of range")
+        
+        # Prepend if position is 0
+        if position == 0:
+            self.prepend(data)
+            return
+        
+        new_node = LLNode(data)
+        current = self.head
+        
+        # Traverse to the node just before the insertion point
+        for _ in range(position - 1):
+            current = current.next
+        
+        new_node.next = current.next
+        current.next = new_node
+        self.size += 1
+    
+    def remove(self, data):
+        """Remove the first node with the specified data"""
+        if self.is_empty():
+            raise ValueError("List is empty")
+        
+        # Special case: remove head
+        if self.head.data == data:
+            self.head = self.head.next
+            self.size -= 1
+            return
+        
+        # Search for the node to remove
+        current = self.head
+        while current.next and current.next.data != data:
+            current = current.next
+        
+        # If data was not found
+        if not current.next:
+            raise ValueError("Value not found in the list")
+        
+        # Remove the node
+        current.next = current.next.next
+        self.size -= 1
+    
+    def find(self, data):
+        """Check if data exists in the list"""
+        current = self.head
+        while current:
+            if current.data == data:
+                return True
+            current = current.next
+        return False
+    
+    def get_at(self, position):
+        """Get the data at the specified position"""
+        if position < 0 or position >= self.size:
+            raise IndexError("Position out of range")
+        
+        current = self.head
+        for _ in range(position):
+            current = current.next
+        
+        return current.data
+    
+    def __len__(self):
+        """Return the number of nodes in the list"""
+        return self.size
+    
+    def __str__(self):
+        """Return a string representation of the list"""
+        if self.is_empty():
+            return "[]"
+        
+        result = []
+        current = self.head
+        while current:
+            result.append(str(current.data))
+            current = current.next
+        
+        return "[" + " -> ".join(result) + "]"
+
+
+def test_linked_list():
+    """Test the LinkedList class"""
+    # Create an empty linked list
+    linked_list = LinkedList()
+    print("Is empty:", linked_list.is_empty())
+    print("List:", linked_list)
+    
+    # Append elements
+    linked_list.append(10)
+    linked_list.append(20)
+    linked_list.append(30)
+    print("\nAfter appending 10, 20, 30:")
+    print("List:", linked_list)
+    print("Size:", len(linked_list))
+    
+    # Prepend elements
+    linked_list.prepend(5)
+    print("\nAfter prepending 5:")
+    print("List:", linked_list)
+    
+    # Insert at position
+    linked_list.insert(15, 2)
+    print("\nAfter inserting 15 at position 2:")
+    print("List:", linked_list)
+    
+    # Get element at position
+    print("\nElement at position 2:", linked_list.get_at(2))
+    try:
+        print("Element at position 10:", linked_list.get_at(10))
+    except IndexError as e:
+        print("Error:", e)
+    
+    # Find elements
+    print("\nFind 15:", linked_list.find(15))
+    print("Find 25:", linked_list.find(25))
+    
+    # Remove elements
+    linked_list.remove(15)
+    print("\nAfter removing 15:")
+    print("List:", linked_list)
+    
+    linked_list.remove(5)
+    print("\nAfter removing 5:")
+    print("List:", linked_list)
+    
+    linked_list.remove(30)
+    print("\nAfter removing 30:")
+    print("List:", linked_list)
+    
+    # Try to remove a non-existent element
+    print("\nTrying to remove 100:")
+    try:
+        linked_list.remove(100)
+    except ValueError as e:
+        print("Error:", e)
+
+"""
+Solutions for Recursive Algorithms
+"""
+
+##############################
+# Solution 14: Loop Logic and Recursive Algorithms
+##############################
+
+def factorial_iterative(n):
+    """
+    Calculate factorial of n using iteration.
+    
+    Args:
+        n: A non-negative integer
+    
+    Returns:
+        n!
+    """
+    if n < 0:
+        raise ValueError("Factorial not defined for negative numbers")
+    
+    result = 1
+    for i in range(1, n + 1):
+        result *= i
+    return result
+
+
+def factorial_recursive(n):
+    """
+    Calculate factorial of n using recursion.
+    
+    Args:
+        n: A non-negative integer
+    
+    Returns:
+        n!
+    """
+    if n < 0:
+        raise ValueError("Factorial not defined for negative numbers")
+    
+    # Base case
+    if n == 0 or n == 1:
+        return 1
+    
+    # Recursive case
+    return n * factorial_recursive(n - 1)
+
+
+def fibonacci_iterative(n):
+    """
+    Calculate the nth Fibonacci number using iteration.
+    
+    Args:
+        n: A non-negative integer
+    
+    Returns:
+        The nth Fibonacci number
+    """
+    if n < 0:
+        raise ValueError("Fibonacci not defined for negative numbers")
+    
+    if n == 0:
+        return 0
+    
+    if n == 1:
+        return 1
+    
+    a, b = 0, 1
+    for _ in range(2, n + 1):
+        a, b = b, a + b
+    return b
+
+
+def fibonacci_recursive(n):
+    """
+    Calculate the nth Fibonacci number using recursion.
+    
+    Args:
+        n: A non-negative integer
+    
+    Returns:
+        The nth Fibonacci number
+    """
+    if n < 0:
+        raise ValueError("Fibonacci not defined for negative numbers")
+    
+    # Base cases
+    if n == 0:
+        return 0
+    if n == 1:
+        return 1
+    
+    # Recursive case
+    return fibonacci_recursive(n - 1) + fibonacci_recursive(n - 2)
+
+
+def sum_digits_iterative(n):
+    """
+    Calculate the sum of digits in n using iteration.
+    
+    Args:
+        n: A non-negative integer
+    
+    Returns:
+        Sum of digits in n
+    """
+    if n < 0:
+        raise ValueError("Input must be non-negative")
+    
+    total = 0
+    while n > 0:
+        total += n % 10  # Add the last digit
+        n //= 10         # Remove the last digit
+    return total
+
+
+def sum_digits_recursive(n):
+    """
+    Calculate the sum of digits in n using recursion.
+    
+    Args:
+        n: A non-negative integer
+    
+    Returns:
+        Sum of digits in n
+    """
+    if n < 0:
+        raise ValueError("Input must be non-negative")
+    
+    # Base case
+    if n < 10:
+        return n
+    
+    # Recursive case: add last digit + sum of remaining digits
+    return n % 10 + sum_digits_recursive(n // 10)
+
+
+def gcd_iterative(a, b):
+    """
+    Calculate greatest common divisor of a and b using iteration (Euclidean algorithm).
+    
+    Args:
+        a, b: Integers
+    
+    Returns:
+        The greatest common divisor of a and b
+    """
+    a, b = abs(a), abs(b)
+    
+    # Handle special case
+    if a == 0:
+        return b
+    if b == 0:
+        return a
+    
+    while b:
+        a, b = b, a % b
+    
+    return a
+
+
+def gcd_recursive(a, b):
+    """
+    Calculate greatest common divisor of a and b using recursion (Euclidean algorithm).
+    
+    Args:
+        a, b: Integers
+    
+    Returns:
+        The greatest common divisor of a and b
+    """
+    a, b = abs(a), abs(b)
+    
+    # Base case
+    if b == 0:
+        return a
+    
+    # Recursive case
+    return gcd_recursive(b, a % b)
+
+
+def binary_search_iterative(arr, target):
+    """
+    Perform binary search for target in sorted array using iteration.
+    
+    Args:
+        arr: A sorted list
+        target: The value to search for
+    
+    Returns:
+        Index of the target if found, otherwise -1
+    """
+    left, right = 0, len(arr) - 1
+    
+    while left <= right:
+        mid = (left + right) // 2
+        
+        if arr[mid] == target:
+            return mid
+        elif arr[mid] < target:
+            left = mid + 1
+        else:
+            right = mid - 1
+    
+    return -1
+
+
+def binary_search_recursive(arr, target, left=0, right=None):
+    """
+    Perform binary search for target in sorted array using recursion.
+    
+    Args:
+        arr: A sorted list
+        target: The value to search for
+        left: The left index of the current search range
+        right: The right index of the current search range
+    
+    Returns:
+        Index of the target if found, otherwise -1
+    """
+    if right is None:
+        right = len(arr) - 1
+    
+    # Base case: target not found
+    if left > right:
+        return -1
+    
+    mid = (left + right) // 2
+    
+    if arr[mid] == target:
+        return mid
+    elif arr[mid] < target:
+        return binary_search_recursive(arr, target, mid + 1, right)
+    else:
+        return binary_search_recursive(arr, target, left, mid - 1)
+
+
+def test_recursive_algorithms():
+    """Test all recursive and iterative algorithm implementations"""
+    # Test factorial
+    print("Testing factorial functions:")
+    for n in range(6):
+        print(f"factorial_iterative({n}) = {factorial_iterative(n)}")
+        print(f"factorial_recursive({n}) = {factorial_recursive(n)}")
+        print()
+    
+    # Test Fibonacci
+    print("Testing Fibonacci functions:")
+    for n in range(10):
+        print(f"fibonacci_iterative({n}) = {fibonacci_iterative(n)}")
+        print(f"fibonacci_recursive({n}) = {fibonacci_recursive(n)}")
+        print()
+    
+    # Test sum of digits
+    print("Testing sum of digits functions:")
+    test_numbers = [123, 45678, 9]
+    for num in test_numbers:
+        print(f"sum_digits_iterative({num}) = {sum_digits_iterative(num)}")
+        print(f"sum_digits_recursive({num}) = {sum_digits_recursive(num)}")
+        print()
+    
+    # Test GCD
+    print("Testing GCD functions:")
+    test_pairs = [(48, 18), (101, 103), (36, 120)]
+    for a, b in test_pairs:
+        print(f"gcd_iterative({a}, {b}) = {gcd_iterative(a, b)}")
+        print(f"gcd_recursive({a}, {b}) = {gcd_recursive(a, b)}")
+        print()
+    
+    # Test binary search
+    print("Testing binary search functions:")
+    arr = [1, 3, 5, 7, 9, 11, 13, 15, 17, 19]
+    targets = [7, 11, 20]
+    for target in targets:
+        print(f"binary_search_iterative(arr, {target}) = {binary_search_iterative(arr, target)}")
+        print(f"binary_search_recursive(arr, {target}) = {binary_search_recursive(arr, target)}")
+        print()
+
+
+##############################
+# Main function to run all tests
+##############################
+
+# def main():
+    
+
 
 ##############################
 # Main function to run all tests
@@ -1267,6 +2035,26 @@ def main():
     print("Testing Game Character System:")
     print("=" * 60)
     test_game_character_system()
+
+    print("=" * 60)
+    print("Testing Lambda Functions and Functional Programming:")
+    print("=" * 60)
+    test_lambda_functions()
+    
+    print("\n" + "=" * 60)
+    print("Testing Bit Operations:")
+    print("=" * 60)
+    test_bit_operations()
+    
+    print("\n" + "=" * 60)
+    print("Testing Linked Lists:")
+    print("=" * 60)
+    test_linked_list()
+    
+    print("\n" + "=" * 60)
+    print("Testing Recursive Algorithms:")
+    print("=" * 60)
+    test_recursive_algorithms()
 
 
 if __name__ == "__main__":

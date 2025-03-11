@@ -820,3 +820,429 @@ Warrior: Aragorn (Level 2) - Health: 120, Strength: 18, Armor: 12
 Mage: Gandalf (Level 2) - Health: 70, Mana: 120, Intelligence: 24
 Archer: Legolas (Level 2) - Health: 85, Dexterity: 22, Arrows: 30
 ```
+
+## Exercise 11: Lambda Functions and Functional Programming
+
+**Concepts:** Lambda functions, higher-order functions, functional programming
+
+Create a module called `functional_tools.py` with the following functions:
+
+1. `map_values(func, values)`: 
+   - Takes a function and a list of values
+   - Returns a new list with the function applied to each value
+   - Implement this using a lambda function, not Python's built-in `map()`
+
+2. `filter_values(predicate, values)`:
+   - Takes a predicate function (returns True/False) and a list of values
+   - Returns a new list containing only values for which the predicate returns True
+   - Implement this using a lambda function, not Python's built-in `filter()`
+
+3. `string_processor()`:
+   - Returns a dictionary of lambda functions that process strings in various ways
+   - The dictionary should have the following keys and functions:
+     - "uppercase": converts a string to uppercase
+     - "lowercase": converts a string to lowercase
+     - "capitalize": capitalizes the first letter of each word
+     - "reverse": reverses the string
+     - "word_count": returns the number of words in the string
+     - "remove_spaces": removes all spaces from the string
+
+4. `compose(f, g)`:
+   - Takes two functions f and g
+   - Returns a new function that computes f(g(x)) for any input x
+   - Use this to create a function `process_pipeline` that takes a list of functions and returns a single function that applies them in sequence
+
+### Test Case:
+```python
+# Test map_values
+numbers = [1, 2, 3, 4, 5]
+squared = map_values(lambda x: x**2, numbers)
+print("Squared numbers:", squared)
+
+# Test filter_values
+even_numbers = filter_values(lambda x: x % 2 == 0, numbers)
+print("Even numbers:", even_numbers)
+
+# Test string_processor
+processors = string_processor()
+text = "hello world"
+for name, processor in processors.items():
+    print(f"{name}: {processor(text)}")
+
+# Test compose
+double = lambda x: x * 2
+add_one = lambda x: x + 1
+double_then_add_one = compose(add_one, double)
+print("double_then_add_one(5):", double_then_add_one(5))
+
+# Test process_pipeline
+pipeline = process_pipeline([
+    lambda x: x + 10,
+    lambda x: x * 2,
+    lambda x: x - 5
+])
+print("pipeline(5):", pipeline(5))
+```
+
+### Expected Output:
+```
+Squared numbers: [1, 4, 9, 16, 25]
+Even numbers: [2, 4]
+uppercase: HELLO WORLD
+lowercase: hello world
+capitalize: Hello World
+reverse: dlrow olleh
+word_count: 2
+remove_spaces: helloworld
+double_then_add_one(5): 11
+pipeline(5): 25
+```
+
+## Exercise 12: Bit Operations
+
+**Concepts:** Bitwise operations, binary representation, bit manipulation
+
+Create a module called `bitwise_operations.py` with the following functions:
+
+1. `count_set_bits(n)`:
+   - Counts the number of '1' bits in the binary representation of integer n
+   - Implement this using bitwise operations, not by converting to a string
+
+2. `is_power_of_two(n)`:
+   - Returns True if n is a power of 2, False otherwise
+   - Implement this using bitwise operations
+   - Handle the case where n is 0 correctly
+
+3. `get_bit(n, position)`:
+   - Returns the bit value at the given position (0-indexed from right) in integer n
+   - Returns 0 or 1
+
+4. `set_bit(n, position)`:
+   - Sets the bit at the given position to 1 and returns the new number
+   - Does not modify the original number
+
+5. `clear_bit(n, position)`:
+   - Sets the bit at the given position to 0 and returns the new number
+   - Does not modify the original number
+
+6. `toggle_bit(n, position)`:
+   - Flips the bit at the given position and returns the new number
+   - Does not modify the original number
+
+### Test Case:
+```python
+# Test count_set_bits
+print("count_set_bits(0):", count_set_bits(0))
+print("count_set_bits(1):", count_set_bits(1))
+print("count_set_bits(5):", count_set_bits(5))  # 101 in binary
+print("count_set_bits(15):", count_set_bits(15))  # 1111 in binary
+
+# Test is_power_of_two
+print("\nis_power_of_two(0):", is_power_of_two(0))
+print("is_power_of_two(1):", is_power_of_two(1))
+print("is_power_of_two(2):", is_power_of_two(2))
+print("is_power_of_two(4):", is_power_of_two(4))
+print("is_power_of_two(5):", is_power_of_two(5))
+print("is_power_of_two(8):", is_power_of_two(8))
+
+# Test get_bit, set_bit, clear_bit, toggle_bit
+n = 42  # Binary: 101010
+print("\nBinary representation of 42:", bin(n))
+
+for i in range(6):
+    print(f"get_bit(42, {i}):", get_bit(n, i))
+
+print("\nset_bit(42, 0):", set_bit(n, 0), "Binary:", bin(set_bit(n, 0)))
+print("set_bit(42, 3):", set_bit(n, 3), "Binary:", bin(set_bit(n, 3)))
+
+print("\nclear_bit(42, 1):", clear_bit(n, 1), "Binary:", bin(clear_bit(n, 1)))
+print("clear_bit(42, 5):", clear_bit(n, 5), "Binary:", bin(clear_bit(n, 5)))
+
+print("\ntoggle_bit(42, 0):", toggle_bit(n, 0), "Binary:", bin(toggle_bit(n, 0)))
+print("toggle_bit(42, 1):", toggle_bit(n, 1), "Binary:", bin(toggle_bit(n, 1)))
+```
+
+### Expected Output:
+```
+count_set_bits(0): 0
+count_set_bits(1): 1
+count_set_bits(5): 2
+count_set_bits(15): 4
+
+is_power_of_two(0): False
+is_power_of_two(1): True
+is_power_of_two(2): True
+is_power_of_two(4): True
+is_power_of_two(5): False
+is_power_of_two(8): True
+
+Binary representation of 42: 0b101010
+get_bit(42, 0): 0
+get_bit(42, 1): 1
+get_bit(42, 2): 0
+get_bit(42, 3): 1
+get_bit(42, 4): 0
+get_bit(42, 5): 1
+
+set_bit(42, 0): 43 Binary: 0b101011
+set_bit(42, 3): 42 Binary: 0b101010
+
+clear_bit(42, 1): 40 Binary: 0b101000
+clear_bit(42, 5): 10 Binary: 0b1010
+
+toggle_bit(42, 0): 43 Binary: 0b101011
+toggle_bit(42, 1): 40 Binary: 0b101000
+```
+
+## Exercise 13: Linked Lists
+
+**Concepts:** Linked data structures, references, traversal algorithms
+
+Create a module called `simple_linked_list.py` with the following classes:
+
+1. `Node` class:
+   - Attributes: `data` (the value stored in the node) and `next` (reference to the next node)
+   - Methods: `__init__(self, data, next=None)` and `__str__(self)`
+
+2. `LinkedList` class:
+   - Attributes: `head` (reference to the first node) and `size` (number of nodes)
+   - Methods:
+     - `__init__(self)`: Initialize an empty list
+     - `is_empty(self)`: Return True if the list is empty
+     - `append(self, data)`: Add a new node with the given data at the end of the list
+     - `prepend(self, data)`: Add a new node with the given data at the beginning of the list
+     - `insert(self, data, position)`: Insert a new node at the given position (0-indexed)
+     - `remove(self, data)`: Remove the first node containing the given data
+     - `find(self, data)`: Return True if the data exists in the list
+     - `get_at(self, position)`: Return the data at the given position
+     - `__len__(self)`: Return the number of nodes in the list
+     - `__str__(self)`: Return a string representation of the list
+
+### Test Case:
+```python
+# Create an empty linked list
+linked_list = LinkedList()
+print("Is empty:", linked_list.is_empty())
+print("List:", linked_list)
+
+# Append elements
+linked_list.append(10)
+linked_list.append(20)
+linked_list.append(30)
+print("\nAfter appending 10, 20, 30:")
+print("List:", linked_list)
+print("Size:", len(linked_list))
+
+# Prepend elements
+linked_list.prepend(5)
+print("\nAfter prepending 5:")
+print("List:", linked_list)
+
+# Insert at position
+linked_list.insert(15, 2)
+print("\nAfter inserting 15 at position 2:")
+print("List:", linked_list)
+
+# Get element at position
+print("\nElement at position 2:", linked_list.get_at(2))
+try:
+    print("Element at position 10:", linked_list.get_at(10))
+except IndexError as e:
+    print("Error:", e)
+
+# Find elements
+print("\nFind 15:", linked_list.find(15))
+print("Find 25:", linked_list.find(25))
+
+# Remove elements
+linked_list.remove(15)
+print("\nAfter removing 15:")
+print("List:", linked_list)
+
+linked_list.remove(5)
+print("\nAfter removing 5:")
+print("List:", linked_list)
+
+linked_list.remove(30)
+print("\nAfter removing 30:")
+print("List:", linked_list)
+
+# Try to remove a non-existent element
+print("\nTrying to remove 100:")
+try:
+    linked_list.remove(100)
+except ValueError as e:
+    print("Error:", e)
+print("List:", linked_list)
+```
+
+### Expected Output:
+```
+Is empty: True
+List: []
+
+After appending 10, 20, 30:
+List: [10 -> 20 -> 30]
+Size: 3
+
+After prepending 5:
+List: [5 -> 10 -> 20 -> 30]
+
+After inserting 15 at position 2:
+List: [5 -> 10 -> 15 -> 20 -> 30]
+
+Element at position 2: 15
+Error: Position out of range
+
+Find 15: True
+Find 25: False
+
+After removing 15:
+List: [5 -> 10 -> 20 -> 30]
+
+After removing 5:
+List: [10 -> 20 -> 30]
+
+After removing 30:
+List: [10 -> 20]
+
+Trying to remove 100:
+Error: Value not found in the list
+List: [10 -> 20]
+```
+
+## Exercise 14: Loop Logic and Recursive Algorithms
+
+**Concepts:** Iteration, recursion, algorithm design
+
+Create a module called `recursive_algorithms.py` with the following functions. For each function, implement both iterative (using loops) and recursive solutions:
+
+1. `factorial_iterative(n)` and `factorial_recursive(n)`:
+   - Calculate the factorial of a non-negative integer n
+
+2. `fibonacci_iterative(n)` and `fibonacci_recursive(n)`:
+   - Return the nth Fibonacci number (where fibonacci(0) = 0 and fibonacci(1) = 1)
+
+3. `sum_digits_iterative(n)` and `sum_digits_recursive(n)`:
+   - Calculate the sum of digits of a non-negative integer n
+
+4. `gcd_iterative(a, b)` and `gcd_recursive(a, b)`:
+   - Calculate the greatest common divisor of integers a and b using Euclidean algorithm
+
+5. `binary_search_iterative(arr, target)` and `binary_search_recursive(arr, target, left=0, right=None)`:
+   - Perform binary search for target in a sorted array arr
+   - Return the index if found, otherwise return -1
+
+### Test Case:
+```python
+# Test factorial
+for n in range(6):
+    print(f"factorial_iterative({n}) = {factorial_iterative(n)}")
+    print(f"factorial_recursive({n}) = {factorial_recursive(n)}")
+    print()
+
+# Test Fibonacci
+for n in range(10):
+    print(f"fibonacci_iterative({n}) = {fibonacci_iterative(n)}")
+    print(f"fibonacci_recursive({n}) = {fibonacci_recursive(n)}")
+    print()
+
+# Test sum of digits
+test_numbers = [123, 45678, 9]
+for num in test_numbers:
+    print(f"sum_digits_iterative({num}) = {sum_digits_iterative(num)}")
+    print(f"sum_digits_recursive({num}) = {sum_digits_recursive(num)}")
+    print()
+
+# Test GCD
+test_pairs = [(48, 18), (101, 103), (36, 120)]
+for a, b in test_pairs:
+    print(f"gcd_iterative({a}, {b}) = {gcd_iterative(a, b)}")
+    print(f"gcd_recursive({a}, {b}) = {gcd_recursive(a, b)}")
+    print()
+
+# Test binary search
+arr = [1, 3, 5, 7, 9, 11, 13, 15, 17, 19]
+targets = [7, 11, 20]
+for target in targets:
+    print(f"binary_search_iterative(arr, {target}) = {binary_search_iterative(arr, target)}")
+    print(f"binary_search_recursive(arr, {target}) = {binary_search_recursive(arr, target, 0, len(arr)-1)}")
+    print()
+```
+
+### Expected Output:
+```
+factorial_iterative(0) = 1
+factorial_recursive(0) = 1
+
+factorial_iterative(1) = 1
+factorial_recursive(1) = 1
+
+factorial_iterative(2) = 2
+factorial_recursive(2) = 2
+
+factorial_iterative(3) = 6
+factorial_recursive(3) = 6
+
+factorial_iterative(4) = 24
+factorial_recursive(4) = 24
+
+factorial_iterative(5) = 120
+factorial_recursive(5) = 120
+
+fibonacci_iterative(0) = 0
+fibonacci_recursive(0) = 0
+
+fibonacci_iterative(1) = 1
+fibonacci_recursive(1) = 1
+
+fibonacci_iterative(2) = 1
+fibonacci_recursive(2) = 1
+
+fibonacci_iterative(3) = 2
+fibonacci_recursive(3) = 2
+
+fibonacci_iterative(4) = 3
+fibonacci_recursive(4) = 3
+
+fibonacci_iterative(5) = 5
+fibonacci_recursive(5) = 5
+
+fibonacci_iterative(6) = 8
+fibonacci_recursive(6) = 8
+
+fibonacci_iterative(7) = 13
+fibonacci_recursive(7) = 13
+
+fibonacci_iterative(8) = 21
+fibonacci_recursive(8) = 21
+
+fibonacci_iterative(9) = 34
+fibonacci_recursive(9) = 34
+
+sum_digits_iterative(123) = 6
+sum_digits_recursive(123) = 6
+
+sum_digits_iterative(45678) = 30
+sum_digits_recursive(45678) = 30
+
+sum_digits_iterative(9) = 9
+sum_digits_recursive(9) = 9
+
+gcd_iterative(48, 18) = 6
+gcd_recursive(48, 18) = 6
+
+gcd_iterative(101, 103) = 1
+gcd_recursive(101, 103) = 1
+
+gcd_iterative(36, 120) = 12
+gcd_recursive(36, 120) = 12
+
+binary_search_iterative(arr, 7) = 3
+binary_search_recursive(arr, 7) = 3
+
+binary_search_iterative(arr, 11) = 5
+binary_search_recursive(arr, 11) = 5
+
+binary_search_iterative(arr, 20) = -1
+binary_search_recursive(arr, 20) = -1
